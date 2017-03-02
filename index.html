@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+	<meta charset="utf-8"/>
+	<title>Gamedev Canvas Workshop </title> 
+	<style> 
+		*{ padding: 0; margin: 0;}
+		canvas{ background: #eee; display: block; margin: 0 auto;}
+	</style>  
+<body>
+	<canvas id="myCanvas" width="480" height="320"></canvas>
+	<script>
+		var canvas=document.getElementById("myCanvas");
+		//storing the 2d redering context here
+		var ctx = canvas.getContext("2d");
+		var x = canvas.width/2;
+		var y = canvas.height/2;
+		var dx = 2;
+		var dy = -2;
+		var ballRadius = 10;
+
+
+		function drawBall(){  
+    		ctx.beginPath();
+    		ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    		ctx.fillStyle = "#0095DD";
+    		ctx.fill();
+    		ctx.closePath();
+		}
+
+		function draw(){
+			//beginPath and closePath just make sure that a line is drawn to connect the shapes together so it is not open
+			//takes in params and clears canvas 
+    		ctx.clearRect(0, 0, canvas.width, canvas.height);
+    		drawBall();
+
+    		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        		dx = -dx;
+    		}
+    		if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+        		dy = -dy;
+    		}
+
+    		x += dx;
+    		y += dy;
+    		
+		}
+		//draw function will be called every 10 milliseconds
+		setInterval(draw, 10);
+
+
+
+
+		
+	</script>
+</body>
+
+</head> 
+</html> 
