@@ -35,6 +35,8 @@
 
 		var score =0;
 
+		var lives = 3;
+
 		var bricks = [];
 		for(c=0; c<brickColumnCount; c++) {
 		    bricks[c] = [];
@@ -95,6 +97,11 @@
 		    }
 		}
 
+		function drawLives(){
+			ctx.font = "16px Arial";
+    		ctx.fillStyle = "#0095DD";
+    		ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+		}
 
 		function drawScore(){
 			ctx.font = "16px Arial";
@@ -143,6 +150,7 @@
     		drawBall();
     		drawPaddle();
     		drawScore();
+    		drawLives();
     		collisionDetection();
     
     		//checking if ball or paddle goes out of bounds
@@ -159,8 +167,20 @@
 				}
 				else{
 					//creating an alert dialog indicating game over
-    				alert("GAME OVER");
-    				document.location.reload();
+					lives--;
+					if(!lives){
+						alert("GAME OVER");
+    					document.location.reload();
+					}
+					else{
+						//reseting the ball and paddle back to their original positions
+						x = canvas.width/2;
+					    y = canvas.height-30;
+					    dx = 2;
+					    dy = -2;
+					    paddleX = (canvas.width-paddleWidth)/2;
+					}
+    				
 				}
 
 			}
