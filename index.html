@@ -33,6 +33,8 @@
 		var brickOffsetTop = 30;
 		var brickOffsetLeft = 30;
 
+		var score =0;
+
 		var bricks = [];
 		for(c=0; c<brickColumnCount; c++) {
 		    bricks[c] = [];
@@ -71,16 +73,30 @@
 		            if(b.status == 1) {
 		                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
 		                    dy = -dy;
+		                    //when collision happens you can set the status to 0
 		                    b.status = 0;
+		                    //increment score every time collision is detected
+		                    score++;
+		                    if(score == brickRowCount*brickColumnCount){
+		                    	alert("YOU WIN, CONGRATULATIONS");
+		                    	document.location.reload();
+		                    }
 		                }
 		            }
 		        }
 		    }
 		}
 
+		function drawScore(){
+			ctx.font = "16px Arial";
+			ctx.fillStyle = "#0095DD";
+			ctx.fillText("Score: "+score, 8, 20);
+		}
+
 		function drawBricks(){
 			for(c = 0; c<brickColumnCount; c++){
 				for(r = 0; r<brickRowCount; r++){
+					//drawing bricks only when no collision has taken place
 					if(bricks[c][r].status == 1){
 						var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
 						var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
@@ -117,6 +133,7 @@
     		drawBricks();
     		drawBall();
     		drawPaddle();
+    		drawScore();
     		collisionDetection();
     
     		//checking if ball or paddle goes out of bounds
